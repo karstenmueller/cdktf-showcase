@@ -1,0 +1,17 @@
+# nodejs
+*.d.ts
+*.js
+!**/dist/*
+**/node_modules
+
+# terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+
+# cdktf
+**/cdktf.out
+.gen
+**/*.log
+
+main.js
