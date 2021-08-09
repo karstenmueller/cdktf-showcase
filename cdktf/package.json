@@ -19,9 +19,12 @@
     "node": ">=10.12"
   },
   "dependencies": {
-    "@cdktf/provider-aws": "^1.0.127",
-    "cdktf": "^0.4.1",
-    "cdktf-cli": "^0.4.1",
+    "@cdktf-plus/aws": "^0.1.0",
+    "@cdktf/provider-aws": "^2.0.3",
+    "@cdktf/provider-external": "^0.1.5",
+    "@cdktf/provider-null": "^0.2.2",
+    "cdktf": "^0.5",
+    "cdktf-cli": "^0.5",
     "constructs": "^3.3.107"
   },
   "devDependencies": {
