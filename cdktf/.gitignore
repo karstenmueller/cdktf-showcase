@@ -1,10 +1,12 @@
 # nodejs
 *.d.ts
 *.js
-!**/dist/*
 **/node_modules
 
 # cdktf
 **/cdktf.out
 .gen
 **/*.log
+terraform.*.tfstate
+terraform.*.tfstate*
+.terraform.*.tfstate*
