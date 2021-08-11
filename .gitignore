@@ -1,2 +1,9 @@
+# nodejs
+*.d.ts
+*.js
+**/node_modules
+
 # direnv
 **/.envrc
+
+**/*.log
