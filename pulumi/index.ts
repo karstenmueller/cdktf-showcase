@@ -1,32 +1,51 @@
-import * as pulumi from '@pulumi/pulumi';
-import * as aws from '@pulumi/aws';
-// import { createConsumerRole, createDefaultPolicies, createPublisherRole } from './role-and-policy';
+import * as aws from "@pulumi/aws";
+import * as pulumi from "@pulumi/pulumi";
 
-async function main() {
-    const prefix = 'pulumi-hello-world';
-    const lambda = createFunction(prefix, role, { BUCKET_NAME: bucket.id });
-}
+// Create the role for the Lambda to assume
+const lambdaRole = new aws.iam.Role("lambdaRole", {
+    assumeRolePolicy: {
+        Version: "2012-10-17",
+        Statement: [
+            {
+                Action: "sts:AssumeRole",
+                Principal: {
+                    Service: "lambda.amazonaws.com",
+                },
+                Effect: "Allow",
+                Sid: "",
+            },
+        ],
+    },
+});
 
-function createFunction(
-    prefix: string,
-    role: aws.iam.Role,
-    variables?: pulumi.Input<{ [key: string]: pulumi.Input<string> }>,
-    vpcConfig?: pulumi.Input<aws.types.input.lambda.FunctionVpcConfig>
-): aws.lambda.Function {
-    const name = `${prefix}-handler`;
-    return new aws.lambda.Function(name, {
-        handler: `index.${prefix}`,
-        name,
-        code: new pulumi.asset.FileArchive(`../application/dist`),
-        runtime: 'nodejs14.x',
-        role: role.arn,
-        vpcConfig,
-        timeout: 90,
-        memorySize: 128,
-        environment: {
-            variables
-        }
-    });
-}
+// Attach the fullaccess policy to the Lambda role created above
+const rolepolicyattachment = new aws.iam.RolePolicyAttachment("lambdaRoleAttachment", {
+    role: lambdaRole,
+    policyArn: aws.iam.ManagedPolicy.AWSLambdaBasicExecutionRole,
+});
 
-export = main();
+// Create the Lambda to execute
+const lambda = new aws.lambda.Function("lambdaFunction", {
+    code: new pulumi.asset.AssetArchive({
+        ".": new pulumi.asset.FileArchive("./app/dist"),
+    }),
+    runtime: "nodejs10.x",
+    role: lambdaRole.arn,
+    handler: "index.handler",
+});
+
+// Give API Gateway permissions to invoke the Lambda
+const lambdapermission = new aws.lambda.Permission("lambdaPermission", {
+    action: "lambda:InvokeFunction",
+    principal: "apigateway.amazonaws.com",
+    function: lambda,
+});
+
+// Set up the API Gateway
+const apigw = new aws.apigatewayv2.Api("httpApiGateway", {
+    protocolType: "HTTP",
+    routeKey: "GET /",
+    target: lambda.invokeArn,
+});
+
+export const endpoint = apigw.apiEndpoint;
