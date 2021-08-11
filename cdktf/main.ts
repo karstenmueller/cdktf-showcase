@@ -17,7 +17,7 @@ class LambdaStack extends TerraformStack {
     // Create Lambda executable including Cloudwatch Logs and IAM execution role
     // Code will be bundled via esbuild and inline all dependencies
     const lambda = new NodejsFunction(this, "lambda-function", {
-      path: path.join(__dirname, '../application', 'index.ts'),
+      path: path.join(__dirname, './app', 'index.ts'),
       timeout: 90,
       memorySize: 128,
     });
