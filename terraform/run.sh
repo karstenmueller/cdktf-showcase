@@ -2,6 +2,7 @@
 
 set -o nounset -o errexit -o pipefail
 
+# defaults to preview of changes
 action="${1:-plan}"
 
 # export TF_CLI_ARGS_plan="-no-color"
@@ -11,11 +12,14 @@ export TF_CLI_ARGS_destroy="--auto-approve"
 CWD="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 pushd "$CWD" >/dev/null
 
-terraform init
-
-cmd="terraform $action"
+if [ "$action" == "deploy" ]; then
+    terraform init
+    cmd="terraform apply"
+else
+    cmd="terraform $action"
+fi
 printf "running '%s' " "$cmd"
-eval "$cmd"
+eval "$cmd" || true
 
 if [ "$action" == "destroy" ]; then
     echo "Cleanup ..."

@@ -1,4 +1,4 @@
-# Showcase Serverless App using API gateway and Lambda
+# Showcase Serverless App using API gateway v2 and Lambda
 
 This showcase should make it easy to compare between IaC code variants as both are creating the same resources. After deployment you got an AWS API Gateway v2 which executes a lambda function to print "Hello world!"
 

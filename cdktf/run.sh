@@ -4,6 +4,7 @@ set -o nounset -o errexit -o pipefail
 
 CWD="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+# defaults to preview of changes
 action="${1:-plan}"
 stack="hello-world"
 

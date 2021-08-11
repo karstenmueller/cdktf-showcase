@@ -17,7 +17,7 @@ resource "random_pet" "random-name" {
 
 data "archive_file" "this" {
   type        = "zip"
-  source_file = "../application/dist/index.js"
+  source_file = "./app/dist/index.js"
   output_path = "./archive.zip"
 }
 

@@ -1,5 +1,28 @@
 # CDK for Terraform
 
+~~~shell
+> cdktf plan
+Stack: hello-world
+Resources
+ + AWS_APIGATEWAYV2_API api-gw              aws_apigatewayv2_api.api-gw
+ + AWS_CLOUDWATCH_LOG_G lambda-function_sno aws_cloudwatch_log_group.lambda-functio
+   ROUP                 op-log-group        n_snoop-log-group_0C1F7E3F
+ + AWS_IAM_POLICY       lambda-function_ser aws_iam_policy.lambda-function_server-r
+                        ver-role_role-polic ole_role-policy_FACD84B8
+                        y
+ + AWS_IAM_ROLE         lambda-function_ser aws_iam_role.lambda-function_server-rol
+                        ver-role            e_E96813CF
+ + AWS_IAM_ROLE_POLICY_ lambda-function_ser aws_iam_role_policy_attachment.lambda-f
+   ATTACHMENT           ver-role_PolicyAtta unction_server-role_PolicyAttachment_9B
+                        chment              DC8FC8
+ + AWS_LAMBDA_FUNCTION  lambda-function_fn  aws_lambda_function.lambda-function_fn_
+                                            644D8088
+ + AWS_LAMBDA_PERMISSIO apigw-lambda        aws_lambda_permission.apigw-lambda
+   N
+
+Diff: 7 to create, 0 to update, 0 to delete.
+~~~
+
 ### Full deploy
 
 Install project dependencies
