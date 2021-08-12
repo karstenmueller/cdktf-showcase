@@ -1,0 +1,9 @@
+{
+    "name": "devcontainer-cdktf",
+    "dockerFile": "Dockerfile",
+    "extensions": [
+        "dbaeumer.vscode-eslint",
+        "hashicorp.terraform"
+    ],
+    "remoteUser": "cdktf"
+}
