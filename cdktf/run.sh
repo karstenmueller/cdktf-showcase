@@ -12,6 +12,9 @@ pushd "$CWD" >/dev/null
 npm install
 # test -d .gen || cdktf get
 
+printf "cdktf version: "
+cdktf --version
+
 cmd="cdktf $action $stack --auto-approve"
 printf "running '%s' " "$cmd"
 eval "$cmd"
